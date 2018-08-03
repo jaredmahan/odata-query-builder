@@ -12,4 +12,4 @@ notifications:
 node_js:
   - node
 script:
-  - npm run test:prod && npm run build
+  - npm run ci && npm run build
