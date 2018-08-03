@@ -12,4 +12,4 @@ notifications:
 node_js:
   - node
 script:
-  - npm run ci && npm run build
+  - npm run lint && npm run ci && npm run build
