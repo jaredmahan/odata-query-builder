@@ -26,7 +26,7 @@ const query = new QueryBuilder()
 ```
 Outputs: 
 ```
-_?$orderby=MyPriorityProp&$top=5&$skip=5&$count=true&$expand=NavigationProp&$filter=Property eq 'MyValue'_
+?$orderby=MyPriorityProp&$top=5&$skip=5&$count=true&$expand=NavigationProp&$filter=Property eq 'MyValue'
 ```
 
 Also Has Support for the following (More Documentation Comming Soon!):
