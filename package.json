@@ -22,7 +22,10 @@
   "homepage": "https://github.com/jaredmahan/odata-query-builder#readme",
   "devDependencies": {
     "@types/jest": "^23.3.1",
+    "@types/lodash": "^4.14.116",
     "awesome-typescript-loader": "^5.2.0",
+    "dts-bundle": "^0.7.3",
+    "dts-bundle-webpack": "^1.0.0",
     "jest": "^23.4.2",
     "lodash": "^4.17.10",
     "source-map-loader": "^0.2.3",

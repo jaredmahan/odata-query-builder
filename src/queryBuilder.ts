@@ -5,7 +5,7 @@ import { QueryFragment } from './queryFragment';
 
 type filterExpressionType = string | number | boolean | Date;
 
-export class FilterBuilder {
+export default class FilterBuilder {
   private fragments: QueryFragment[] = [];
   filterExpression = (field: string, operator: string, value: filterExpressionType) => {
     this.fragments.push(
@@ -81,15 +81,15 @@ export class QueryBuilder {
   toQuery = () => {
     if (this.fragments.length < 1) return '';
 
-    const sortedFragments = orderBy(this.fragments, sf => sf.type);
-    const nonFilterFragments = sortedFragments.filter(sf => sf.type !== FragmentType.Filter);
-    const filterFragments = sortedFragments.filter(sf => sf.type === FragmentType.Filter);
+    const sortedFragments = orderBy(this.fragments, (sf: QueryFragment) => sf.type);
+    const nonFilterFragments = sortedFragments.filter((sf: QueryFragment) => sf.type !== FragmentType.Filter);
+    const filterFragments = sortedFragments.filter((sf: QueryFragment) => sf.type === FragmentType.Filter);
 
     let query =
       '?' +
       sortedFragments
-        .filter(sf => sf.type !== FragmentType.Filter)
-        .map(sf => sf.value)
+        .filter((sf: QueryFragment) => sf.type !== FragmentType.Filter)
+        .map((sf: QueryFragment) => sf.value)
         .join('&');
 
     if (filterFragments.length < 1) return query;

@@ -1,10 +1,16 @@
 {
-    "compilerOptions": {
-        "outDir": "./built",
-        "allowJs": true,
-        "target": "es5"
-    },
-    "include": [
-        "./src/**/*"
-    ]
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist",
+    "strict": true,
+    "sourceMap": true,
+    "declaration": true,
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "esnext",
+    "typeRoots": ["node_modules/@types"]
+  }
 }
