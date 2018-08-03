@@ -2,7 +2,7 @@
   "name": "odata-query-builder",
   "version": "0.0.1",
   "description": "An eloquently fluent OData query builder.",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "webpack",
     "lint": "tslint --project tslint.json src/**/**.ts",

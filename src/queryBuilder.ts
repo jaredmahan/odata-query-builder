@@ -1,7 +1,7 @@
 import { orderBy } from 'lodash';
 
 import { FragmentType } from './enums';
-import { QueryFragment} from './queryFragment';
+import { QueryFragment } from './queryFragment';
 
 type filterExpressionType = string | number | boolean | Date;
 
