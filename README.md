@@ -1,3 +1,5 @@
+## Recently patched and updated! Looking For Contributors. 
+
 # odata-query-builder
 An eloquently fluent OData query builder.
 
