@@ -24,6 +24,11 @@ describe('Query Builder', () => {
       '?$expand=test'
     );
   });
+  it('should return select', () => {
+    expect(new QueryBuilder().select('test').toQuery()).toEqual(
+      '?$select=test'
+    )
+  });
   it('should add a new filter expression', () => {
     const testCases = new TestCaseCollection([
       new TestCase(

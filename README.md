@@ -22,6 +22,7 @@ const query = new QueryBuilder()
   .expand('NavigationProp')
   .orderBy('MyPriorityProp')
   .filter(f => f.filterExpression('Property', 'eq', 'MyValue'))
+  .select('My Properties')
   .toQuery()
 ```
 

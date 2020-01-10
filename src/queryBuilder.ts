@@ -1,7 +1,7 @@
-import { orderBy } from 'lodash';
-
 import { FragmentType } from './enums';
 import { QueryFragment } from './queryFragment';
+
+const orderBy = require('lodash.orderby');
 
 type filterExpressionType = string | number | boolean | Date;
 
@@ -69,6 +69,10 @@ export class QueryBuilder {
   };
   expand = (fields: string) => {
     this.fragments.push(new QueryFragment(FragmentType.Expand, `$expand=${fields}`));
+    return this;
+  };
+  select = (fields: string) => {
+    this.fragments.push(new QueryFragment(FragmentType.Select, `$select=${fields}`));
     return this;
   };
 

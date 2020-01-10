@@ -5,4 +5,5 @@ export enum FragmentType {
     Count = 4,
     Expand = 5,
     Filter = 6,
+    Select = 7
   }
