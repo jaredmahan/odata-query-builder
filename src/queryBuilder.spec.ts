@@ -13,21 +13,46 @@ describe('Query Builder', () => {
       '?$orderby=test'
     );
   });
+  it('should only return the last order by', () => {
+    expect(new QueryBuilder().orderBy('old').orderBy('test').toQuery()).toEqual(
+      '?$orderby=test'
+    );
+  });
   it('should return top', () => {
     expect(new QueryBuilder().top(1).toQuery()).toEqual('?$top=1');
   });
+  it('should only return the last top', () => {
+    expect(new QueryBuilder().top(5).top(1).toQuery()).toEqual(
+      '?$top=1'
+    );
+  });
   it('should return skip', () => {
     expect(new QueryBuilder().skip(1).toQuery()).toEqual('?$skip=1');
+  });
+  it('should only return the last skip', () => {
+    expect(new QueryBuilder().skip(5).skip(1).toQuery()).toEqual(
+      '?$skip=1'
+    );
   });
   it('should return expand', () => {
     expect(new QueryBuilder().expand('test').toQuery()).toEqual(
       '?$expand=test'
     );
   });
+  it('should only return the last expand at the root level', () => {
+    expect(new QueryBuilder().expand('old').expand('test').toQuery()).toEqual(
+      '?$expand=test'
+    );
+  });
   it('should return select', () => {
     expect(new QueryBuilder().select('test').toQuery()).toEqual(
       '?$select=test'
-    )
+    );
+  });
+  it('should only return the last select at the root level', () => {
+    expect(new QueryBuilder().select('old').select('test').toQuery()).toEqual(
+      '?$select=test'
+    );
   });
   it('should add a new filter expression', () => {
     const testCases = new TestCaseCollection([

@@ -1,6 +1,6 @@
 {
   "name": "odata-query-builder",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "An eloquently fluent OData query builder.",
   "main": "dist/index.js",
   "scripts": {

@@ -52,36 +52,46 @@ export default class FilterBuilder {
 export class QueryBuilder {
   private fragments: QueryFragment[] = [];
   orderBy = (fields: string) => {
+    this.clear(FragmentType.OrderBy);
     this.fragments.push(new QueryFragment(FragmentType.OrderBy, `$orderby=${fields}`));
     return this;
   };
   top = (top: number) => {
+    this.clear(FragmentType.Top);
     this.fragments.push(new QueryFragment(FragmentType.Top, `$top=${top}`));
     return this;
   };
   skip = (skip: number) => {
+    this.clear(FragmentType.Skip);
     this.fragments.push(new QueryFragment(FragmentType.Skip, `$skip=${skip}`));
     return this;
   };
   count = () => {
+    this.clear(FragmentType.Count);
     this.fragments.push(new QueryFragment(FragmentType.Count, `$count=true`));
     return this;
   };
   expand = (fields: string) => {
+    this.clear(FragmentType.Expand);
     this.fragments.push(new QueryFragment(FragmentType.Expand, `$expand=${fields}`));
     return this;
   };
   select = (fields: string) => {
+    this.clear(FragmentType.Select);
     this.fragments.push(new QueryFragment(FragmentType.Select, `$select=${fields}`));
     return this;
   };
-
   filter = (predicate: (filter: FilterBuilder) => FilterBuilder, operator: string = 'and') => {
+    this.clear(FragmentType.Filter);
     this.fragments.push(
       new QueryFragment(FragmentType.Filter, predicate(new FilterBuilder()).toQuery(operator))
     );
     return this;
   };
+  clear = (fragmentType: FragmentType) => {
+    this.fragments = this.fragments.filter(f => f.type !== fragmentType);
+    return this;
+  }
   toQuery = () => {
     if (this.fragments.length < 1) return '';
 
