@@ -144,7 +144,7 @@ describe('Query Builder', () => {
               f
                 .filterExpression('testProp1', 'eq', 'testVal1')
                 .filterExpression('testProp2', 'eq', 'testVal2'),
-            'and'
+            {operator:'and'}
           )
           .toQuery(),
         '?$filter=testProp1 eq \'testVal1\' and testProp2 eq \'testVal2\''
@@ -156,7 +156,7 @@ describe('Query Builder', () => {
               f
                 .filterPhrase('contains(\'test1\')')
                 .filterPhrase('contains(\'test2\')'),
-            'and'
+            {operator:'and'}
           )
           .toQuery(),
         '?$filter=contains(\'test1\') and contains(\'test2\')'
@@ -168,7 +168,7 @@ describe('Query Builder', () => {
               f
                 .filterExpression('testProp1', 'eq', 'testVal1')
                 .filterPhrase('contains(\'test\')'),
-            'and'
+            {operator:'and'}
           )
           .toQuery(),
         '?$filter=testProp1 eq \'testVal1\' and contains(\'test\')'
@@ -186,7 +186,7 @@ describe('Query Builder', () => {
               f
                 .filterExpression('testProp1', 'eq', 'testVal1')
                 .filterExpression('testProp2', 'eq', 'testVal2'),
-            'or'
+            {operator:'or'}
           )
           .toQuery(),
         '?$filter=testProp1 eq \'testVal1\' or testProp2 eq \'testVal2\''
@@ -198,7 +198,7 @@ describe('Query Builder', () => {
               f
                 .filterPhrase('contains(\'test1\')')
                 .filterPhrase('contains(\'test2\')'),
-            'or'
+            {operator:'or'}
           )
           .toQuery(),
         '?$filter=contains(\'test1\') or contains(\'test2\')'
@@ -210,7 +210,7 @@ describe('Query Builder', () => {
               f
                 .filterExpression('testProp1', 'eq', 'testVal1')
                 .filterPhrase('contains(\'test\')'),
-            'or'
+            {operator:'or'}
           )
           .toQuery(),
         '?$filter=testProp1 eq \'testVal1\' or contains(\'test\')'
@@ -245,7 +245,7 @@ describe('Query Builder', () => {
                     .filterExpression('testProp2', 'eq', 'testVal2')
                     .filterExpression('testProp3', 'eq', 'testVal3')
                 ),
-            'and'
+            {operator:'and'}
           )
           .toQuery(),
         '?$filter=testProp1 eq \'testVal1\' and (testProp2 eq \'testVal2\' or testProp3 eq \'testVal3\')'
@@ -261,7 +261,7 @@ describe('Query Builder', () => {
                     .filterExpression('testProp2', 'eq', 'testVal2')
                     .filterExpression('testProp3', 'eq', 'testVal3')
                 ),
-            'or'
+            {operator:'or'}
           )
           .toQuery(),
         '?$filter=testProp1 eq \'testVal1\' or (testProp2 eq \'testVal2\' or testProp3 eq \'testVal3\')'
@@ -296,7 +296,7 @@ describe('Query Builder', () => {
                     .filterExpression('testProp2', 'eq', 'testVal2')
                     .filterExpression('testProp3', 'eq', 'testVal3')
                 ),
-            'and'
+            {operator:'and'}
           )
           .toQuery(),
         '?$filter=testProp1 eq \'testVal1\' and (testProp2 eq \'testVal2\' and testProp3 eq \'testVal3\')'
@@ -312,7 +312,7 @@ describe('Query Builder', () => {
                     .filterExpression('testProp2', 'eq', 'testVal2')
                     .filterExpression('testProp3', 'eq', 'testVal3')
                 ),
-            'or'
+            {operator:'or'}
           )
           .toQuery(),
         '?$filter=testProp1 eq \'testVal1\' or (testProp2 eq \'testVal2\' and testProp3 eq \'testVal3\')'
@@ -320,4 +320,28 @@ describe('Query Builder', () => {
     ]);
     testCases.test();
   });
+  it('should add a filter and then add another, clearing the first one', () => {
+    const query =  new QueryBuilder().filter(f1 => f1
+      .filterExpression('testProp1','eq','testVal1')
+    )
+    expect(query.toQuery()).toBe('?$filter=testProp1 eq \'testVal1\'')
+
+    query.filter(f2 => f2
+      .filterExpression('testProp2','eq','testVal2'),
+      { clearPreviousFilters: true }
+    )
+    expect(query.toQuery()).toBe('?$filter=testProp2 eq \'testVal2\'')
+  })
+  it('should add a filter and then add another, not clearing the first one', () => {
+    const query =  new QueryBuilder().filter(f1 => f1
+      .filterExpression('testProp1','eq','testVal1')
+    )
+    expect(query.toQuery()).toBe('?$filter=testProp1 eq \'testVal1\'')
+
+    query.filter(f2 => f2
+      .filterExpression('testProp2','eq','testVal2'),
+      { clearPreviousFilters: false }
+    )
+    expect(query.toQuery()).toBe('?$filter=testProp1 eq \'testVal1\' and testProp2 eq \'testVal2\'')
+  })
 });

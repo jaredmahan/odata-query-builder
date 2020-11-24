@@ -81,8 +81,13 @@ export class QueryBuilder {
     this.fragments.push(new QueryFragment(FragmentType.Select, `$select=${fields}`));
     return this;
   };
-  filter = (predicate: (filter: FilterBuilder) => FilterBuilder, operator: string = 'and') => {
-    this.clear(FragmentType.Filter);
+  filter = (predicate: (filter: FilterBuilder) => FilterBuilder, options: { operator?: string, clearPreviousFilters?: boolean } = {operator: 'and', clearPreviousFilters: false} ) => {
+    const operator =  options.operator || 'and'
+    
+    if (options.clearPreviousFilters) {
+      this.clear(FragmentType.Filter);
+    }
+
     this.fragments.push(
       new QueryFragment(FragmentType.Filter, predicate(new FilterBuilder()).toQuery(operator))
     );
